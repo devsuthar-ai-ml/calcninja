@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST Calculator India — Add/Remove GST Calculator Online | CalcNinja</title>
+<meta name="description" content="Free GST calculator for India. Add GST or remove GST from amount instantly. Calculate CGST, SGST for 5%, 12%, 18%, 28% rates. No signup.">
+<meta name="keywords" content="gst calculator, gst calculator india, add gst calculator, remove gst calculator, cgst sgst calculator, gst rate calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/gst-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a><a href="/hi/gst-calculator">हिंदी</a></nav>
+  <div class="header-actions">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a>
+  <a href="/#tools" onclick="toggleMenu()">All Tools</a>
+  <a href="/tools/emi-calculator" onclick="toggleMenu()">EMI</a>
+  <a href="/hi/gst-calculator" onclick="toggleMenu()">हिंदी</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🧾 GST Calculator</h1>
+      <p>Calculate GST instantly — Add or Remove GST from any amount</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" id="gstAmount" value="1000" min="0" step="1" oninput="calculateGST()" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label>GST Rate</label>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <button class="gst-rate active" onclick="setGSTRate(5,this)">5%</button>
+            <button class="gst-rate" onclick="setGSTRate(12,this)">12%</button>
+            <button class="gst-rate" onclick="setGSTRate(18,this)">18%</button>
+            <button class="gst-rate" onclick="setGSTRate(28,this)">28%</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Operation</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button class="gst-op active" onclick="setGSTOp('add',this)">Add GST</button>
+            <button class="gst-op" onclick="setGSTOp('remove',this)">Remove GST</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label" id="gst-result-label">Amount with GST</div>
+          <div class="result-amount" id="gstTotal">₹1,180</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Original</div>
+              <div class="breakdown-value" id="gstOriginal">₹1,000</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">GST (18%)</div>
+              <div class="breakdown-value" id="gstAmount2">₹180</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">CGST</div>
+              <div class="breakdown-value" id="gstCGST">₹90</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h3>GST Rates in India</h3>
+          <table class="emi-table">
+            <tr><td><strong>Rate</strong></td><td><strong>Examples</strong></td></tr>
+            <tr><td>0%</td><td>Milk, Bread, Vegetables</td></tr>
+            <tr><td>5%</td><td>Spices, Books, Medicines</td></tr>
+            <tr><td>12%</td><td>Electronics, Clothes, Food items</td></tr>
+            <tr><td>18%</td><td>Most goods, Restaurants, Services</td></tr>
+            <tr><td>28%</td><td>Luxury items, Automobiles</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>GST क्या है? 🧾</h2>
+      <p><strong>GST = Goods and Services Tax</strong>. Amount पर लगने वाला एक indirect tax है। भारत में सब जगह GST लगता है।</p>
+      <h3>CGST + SGST = GST</h3>
+      <p>GST को दो हिस्सों में divide किया जाता है — CGST (Central) और SGST (State)। दोनों equal होते हैं।</p>
+      <h3>Example</h3>
+      <p>₹100 का सामान + 18% GST = ₹118<br>CGST = ₹9, SGST = ₹9</p>
+    </div>
+
+    <div class="tool-share">
+      <button onclick="whatsappShare('GST')" class="btn-wa">📤 Share</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+let gstRate = 5;
+let gstOp = 'add';
+
+function calculateGST() {
+  const amt = parseFloat(document.getElementById('gstAmount').value) || 0;
+  let total, tax;
+
+  if (gstOp === 'add') {
+    tax = (amt * gstRate) / 100;
+    total = amt + tax;
+    document.getElementById('gst-result-label').textContent = 'Amount with GST';
+  } else {
+    total = amt / (1 + gstRate/100);
+    tax = amt - total;
+    document.getElementById('gst-result-label').textContent = 'Amount without GST';
+  }
+
+  document.getElementById('gstTotal').textContent = formatINR(gstOp === 'add' ? total : amt);
+  document.getElementById('gstOriginal').textContent = formatINR(gstOp === 'add' ? amt : total);
+  document.getElementById('gstAmount2').textContent = formatINR(tax);
+  document.getElementById('gstCGST').textContent = formatINR(tax/2);
+}
+
+function setGSTRate(r, el) {
+  gstRate = r;
+  document.querySelectorAll('.gst-rate').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  calculateGST();
+}
+
+function setGSTOp(op, el) {
+  gstOp = op;
+  document.querySelectorAll('.gst-op').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  calculateGST();
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  if (n >= 1000) return '₹' + (n/1000).toFixed(2) + ' K';
+  return '₹' + n.toFixed(2);
+}
+
+function whatsappShare(t) { window.open(`https://wa.me/?text=${encodeURIComponent(t+' Calculator - calcninja.vercel.app')}`, '_blank'); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateGST();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclaimer — CalcNinja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<main style="max-width:800px;margin:0 auto;padding:2rem">
+<h1>Disclaimer</h1>
+<p><strong>Last Updated: January 2025</strong></p>
+<h2>1. Educational Purpose Only</h2>
+<p>CalcNinja is for educational purposes. Results are estimates and approximations.</p>
+<h2>2. Not Financial Advice</h2>
+<p>Nothing on CalcNinja is financial advice. We are not investment advisors, financial planners, or accountants. Consult professionals before:</p>
+<ul>
+<li>Taking loans</li>
+<li>Investing money</li>
+<li>Filing tax returns</li>
+<li>Making any financial decision</li>
+</ul>
+<h2>3. Accuracy Not Guaranteed</h2>
+<p>While we strive for accuracy, calculator results may not match:</p>
+<ul>
+<li>Your bank's EMI calculations (due to processing fees)</li>
+<li>Tax authorities' calculations (due to deductions/exemptions)</li>
+<li>Real-time currency rates (use live rates for transactions)</li>
+</ul>
+<h2>4. Market Changes</h2>
+<p>Interest rates, tax slabs, and rates change. Our calculators may not reflect current values.</p>
+<h2>5. No Liability</h2>
+<p>CalcNinja is provided "as-is" with no warranties. We're not liable for:</p>
+<ul>
+<li>Financial losses</li>
+<li>Wrong decisions based on calculator results</li>
+<li>Technical errors or availability issues</li>
+</ul>
+<h2>6. Your Responsibility</h2>
+<p>You are responsible for verifying all information before making decisions.</p>
+<h2>7. Professional Consultation</h2>
+<p><strong>Always consult:</strong></p>
+<ul>
+<li>Banks for loan terms</li>
+<li>Tax advisors (CA/CPA) for tax planning</li>
+<li>SEBI-registered advisors for investments</li>
+<li>Insurance agents for policy calculations</li>
+</ul>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

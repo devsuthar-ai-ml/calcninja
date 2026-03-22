@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentage Calculator | CalcNinja</title>
+<meta name="description" content="Free percentage calculator. Calculate percentages, percentage increase/decrease, percentage of total.">
+<meta name="keywords" content="percentage calculator, percent calculator, percentage increase calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/percentage-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>📊 Percentage Calculator</h1>
+      <p>Calculate percentages instantly</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>What is</label>
+          <input type="number" id="percNum" value="25" min="0" step="1" oninput="calculatePerc()" class="form-input" style="width:60px">
+          <label style="display:inline">% of</label>
+          <input type="number" id="percOf" value="200" min="0" step="1" oninput="calculatePerc()" class="form-input" style="width:60px">
+        </div>
+
+        <div class="form-group">
+          <label style="margin-top:1rem">Percentage Change</label>
+          <input type="number" id="percOld" value="100" min="0" step="1" oninput="calculatePercChange()" class="form-input" placeholder="Old value">
+          <input type="number" id="percNew" value="150" min="0" step="1" oninput="calculatePercChange()" class="form-input" placeholder="New value" style="margin-top:0.5rem">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Result</div>
+          <div class="result-amount" id="percResult">50</div>
+          <div style="font-size:0.9rem;color:var(--text-muted);margin-top:0.5rem" id="percDesc">25% of 200 = 50</div>
+
+          <div style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)">
+            <div class="result-label">Change</div>
+            <div class="result-amount" id="percChangeResult">+50%</div>
+            <div style="font-size:0.9rem;color:var(--text-muted);margin-top:0.5rem" id="percChangeDesc">100 to 150 = +50%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculatePerc() {
+  const num = parseFloat(document.getElementById('percNum').value) || 0;
+  const of = parseFloat(document.getElementById('percOf').value) || 1;
+  const result = (num / 100) * of;
+  document.getElementById('percResult').textContent = result.toFixed(2);
+  document.getElementById('percDesc').textContent = num + '% of ' + of + ' = ' + result.toFixed(2);
+}
+
+function calculatePercChange() {
+  const old = parseFloat(document.getElementById('percOld').value) || 1;
+  const newv = parseFloat(document.getElementById('percNew').value) || 0;
+  const change = ((newv - old) / old) * 100;
+  const sign = change >= 0 ? '+' : '';
+  document.getElementById('percChangeResult').textContent = sign + change.toFixed(2) + '%';
+  document.getElementById('percChangeDesc').textContent = old + ' to ' + newv + ' = ' + sign + change.toFixed(2) + '%';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculatePerc();
+  calculatePercChange();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

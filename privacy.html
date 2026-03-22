@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — CalcNinja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<main style="max-width:800px;margin:0 auto;padding:2rem">
+<h1>Privacy Policy</h1>
+<p><strong>Last Updated: January 2025</strong></p>
+<h2>Our Commitment</h2>
+<p>CalcNinja does NOT collect, store, or transmit any personal data. All calculations happen in your browser.</p>
+<h2>What We Don't Collect</h2>
+<ul>
+<li>No email addresses required</li>
+<li>No phone numbers</li>
+<li>No personal financial information stored</li>
+<li>No cookies tracking your activity</li>
+</ul>
+<h2>LocalStorage (Your Device Only)</h2>
+<p>Your browser's LocalStorage stores: calculation history, dark mode preference. This data never leaves your device.</p>
+<h2>Third-Party Links</h2>
+<p>Affiliate links to Groww, Zerodha, PolicyBazaar. Read their privacy policies separately.</p>
+<h2>GDPR</h2>
+<p>No personal data = Full GDPR compliance by design.</p>
+<h2>Contact</h2>
+<p>Questions? Email: support@calcninja.vercel.app</p>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

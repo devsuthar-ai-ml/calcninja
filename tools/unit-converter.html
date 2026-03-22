@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit Converter | Length, Weight, Temperature | CalcNinja</title>
+<meta name="description" content="Free unit converter. Convert between meters, kilometers, pounds, kilometers, celsius, fahrenheit and more.">
+<meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, distance converter">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/unit-converter">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🔄 Unit Converter</h1>
+      <p>Convert between different units instantly</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Conversion Type</label>
+          <select id="convType" onchange="changeConvType()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px">
+            <option value="length">Length (km, m, cm, mile, yard)</option>
+            <option value="weight">Weight (kg, g, lb, oz)</option>
+            <option value="temp">Temperature (°C, °F)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label id="convLabel">Kilometers</label>
+          <input type="number" id="convFrom" value="1" step="0.01" oninput="convert()" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label id="convTo">Meters</label>
+          <input type="number" id="convResult" readonly class="form-input" style="background:var(--bg)">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Common Conversions</div>
+          <table class="emi-table">
+            <tr><td>1 km</td><td>1000 m</td></tr>
+            <tr><td>1 m</td><td>3.28 ft</td></tr>
+            <tr><td>1 mile</td><td>1.609 km</td></tr>
+            <tr><td>1 kg</td><td>2.20 lb</td></tr>
+            <tr><td>1°C</td><td>(×9/5)+32°F</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+const conversions = {
+  length: { label: 'Kilometers', to: 'Meters', factor: 1000 },
+  weight: { label: 'Kilograms', to: 'Grams', factor: 1000 },
+  temp: { label: 'Celsius', to: 'Fahrenheit', factor: 1.8, offset: 32 }
+};
+
+function changeConvType() {
+  const type = document.getElementById('convType').value;
+  const conv = conversions[type];
+  document.getElementById('convLabel').textContent = conv.label;
+  document.getElementById('convTo').textContent = conv.to;
+  document.getElementById('convFrom').value = '1';
+  convert();
+}
+
+function convert() {
+  const type = document.getElementById('convType').value;
+  const from = parseFloat(document.getElementById('convFrom').value) || 0;
+  const conv = conversions[type];
+
+  let result;
+  if (type === 'temp') {
+    result = (from * conv.factor) + conv.offset;
+  } else {
+    result = from * conv.factor;
+  }
+
+  document.getElementById('convResult').value = result.toFixed(4);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  convert();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI कैलकुलेटर - होम लोन ईएमआई कैलकुलेटर | CalcNinja</title>
+<meta name="description" content="फ्री EMI कैलकुलेटर। होम लोन EMI, कार लोन EMI तुरंत निकालें। मासिक भुगतान विवरण के साथ। बिना लॉगिन।">
+<meta name="keywords" content="emi calculator, emi kaise nikale, home loan emi, car loan emi, personal loan emi, emi formula, monthly emi">
+<link rel="canonical" href="https://calcninja.vercel.app/hi/emi-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav">
+    <a href="/">होम</a>
+    <a href="/#tools">टूल्स</a>
+    <a href="/tools/emi-calculator">English</a>
+  </nav>
+  <div class="header-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Dark/Light mode">🌙</button>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">🏠 होम</a>
+  <a href="/#tools" onclick="toggleMenu()">🔢 सभी टूल्स</a>
+  <a href="/hi/sip-calculator" onclick="toggleMenu()">📈 SIP कैलकुलेटर</a>
+  <a href="/tools/emi-calculator" onclick="toggleMenu()">🇺🇸 English</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🏠 EMI कैलकुलेटर</h1>
+      <p>होम लोन, कार लोन, पर्सनल लोन - सेकंडों में EMI निकालें</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label for="emiPrincipal">लोन राशि (₹)</label>
+          <input type="number" id="emiPrincipal" min="100000" max="100000000" step="50000" value="2500000" oninput="calculateEMI()" class="form-input">
+          <input type="range" id="emiPrincipalSlider" min="100000" max="100000000" step="50000" value="2500000" oninput="syncInput('emiPrincipal', this); calculateEMI()" class="range-input">
+          <div class="input-hint">₹1 लाख से ₹10 करोड़ तक</div>
+        </div>
+
+        <div class="form-group">
+          <label for="emiRate">वार्षिक ब्याज दर (%)</label>
+          <input type="number" id="emiRate" min="3" max="25" step="0.25" value="7.5" oninput="calculateEMI()" class="form-input">
+          <input type="range" id="emiRateSlider" min="3" max="25" step="0.25" value="7.5" oninput="syncInput('emiRate', this); calculateEMI()" class="range-input">
+          <div class="input-hint">बैंक दर: 7-9%</div>
+        </div>
+
+        <div class="form-group">
+          <label for="emiTenure">लोन अवधि (वर्ष)</label>
+          <input type="number" id="emiTenure" min="1" max="30" step="1" value="20" oninput="calculateEMI()" class="form-input">
+          <input type="range" id="emiTenureSlider" min="1" max="30" step="1" value="20" oninput="syncInput('emiTenure', this); calculateEMI()" class="range-input">
+          <div class="input-hint">1 साल से 30 साल तक</div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">हर महीने EMI</div>
+          <div class="result-amount" id="emiMonthly">₹17,355</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">कुल भुगतान</div>
+              <div class="breakdown-value" id="emiTotalPayable">₹41,65,200</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">कुल ब्याज</div>
+              <div class="breakdown-value" id="emiTotalInterest">₹16,65,200</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">मूलधन</div>
+              <div class="breakdown-value" id="emiPrincipalAmount">₹25,00,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>EMI क्या है? 🤔</h2>
+      <p><strong>EMI = Equated Monthly Installment</strong>। हर महीने जो पैसा बैंक को देते हो वह EMI है। EMI में मूलधन और ब्याज दोनों होते हैं।</p>
+      
+      <h3>EMI के फायदे</h3>
+      <ul style="padding-left:1.5rem">
+        <li>✓ निर्धारित राशि - हर महीने same amount</li>
+        <li>✓ कोई छिपी लागत नहीं</li>
+        <li>✓ आसानी से योजना बना सकते हो</li>
+      </ul>
+    </div>
+
+    <div class="tool-share">
+      <button onclick="whatsappShare('EMI', document.getElementById('emiMonthly').textContent)" class="btn-wa">📤 WhatsApp पर शेयर करें</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Calc🥷Ninja</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CalcNinja - भारत का स्मार्ट फ्री कैलकुलेटर</p>
+  </div>
+</footer>
+
+<script>
+function calculateEMI() {
+  const principal = parseFloat(document.getElementById('emiPrincipal').value) || 0;
+  const rate = parseFloat(document.getElementById('emiRate').value) || 0;
+  const tenure = parseFloat(document.getElementById('emiTenure').value) || 0;
+
+  if (principal <= 0 || rate <= 0 || tenure <= 0) return;
+
+  const monthlyRate = rate / 12 / 100;
+  const months = tenure * 12;
+  const numerator = principal * monthlyRate * Math.pow(1 + monthlyRate, months);
+  const denominator = Math.pow(1 + monthlyRate, months) - 1;
+  const emi = numerator / denominator;
+
+  const totalPayable = emi * months;
+  const totalInterest = totalPayable - principal;
+
+  document.getElementById('emiMonthly').textContent = formatINR(emi);
+  document.getElementById('emiTotalPayable').textContent = formatINR(totalPayable);
+  document.getElementById('emiTotalInterest').textContent = formatINR(totalInterest);
+  document.getElementById('emiPrincipalAmount').textContent = formatINR(principal);
+
+  updateSliders();
+}
+
+function formatINR(num) {
+  if (num >= 10000000) return '₹' + (num / 10000000).toFixed(2) + ' Cr';
+  if (num >= 100000) return '₹' + (num / 100000).toFixed(2) + ' L';
+  if (num >= 1000) return '₹' + (num / 1000).toFixed(2) + ' K';
+  return '₹' + num.toFixed(2);
+}
+
+function syncInput(inputId, rangeEl) {
+  document.getElementById(inputId).value = rangeEl.value;
+}
+
+function updateSliders() {
+  document.getElementById('emiPrincipalSlider').value = document.getElementById('emiPrincipal').value;
+  document.getElementById('emiRateSlider').value = document.getElementById('emiRate').value;
+  document.getElementById('emiTenureSlider').value = document.getElementById('emiTenure').value;
+}
+
+function whatsappShare(title, text) {
+  const msg = encodeURIComponent(`${title}: ${text} - CalcNinja से calculate किया`);
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateEMI();
+  const theme = localStorage.getItem('cn_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('cn_theme', newTheme);
+}
+
+function toggleMenu() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

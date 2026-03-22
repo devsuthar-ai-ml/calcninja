@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPF Calculator India — Public Provident Fund Calculator | CalcNinja</title>
+<meta name="description" content="Free PPF calculator. Calculate Public Provident Fund maturity amount with interest. 15-year pension plan calculator.">
+<meta name="keywords" content="ppf calculator, ppf calculator india, public provident fund calculator, ppf interest calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/ppf-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🏛️ PPF Calculator</h1>
+      <p>Calculate your PPF maturity amount after 15 years</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Yearly Investment (₹)</label>
+          <input type="number" id="ppfAmount" value="150000" min="500" max="1500000" step="10000" oninput="calculatePPF()" class="form-input">
+          <div class="input-hint">Min ₹500, Max ₹1.5 लाख</div>
+        </div>
+        <div class="form-group">
+          <label>Investment Period (Years)</label>
+          <input type="number" id="ppfYears" value="15" min="1" max="50" step="1" oninput="calculatePPF()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Current Rate</label>
+          <input type="number" id="ppfRate" value="7.1" min="5" max="10" step="0.1" oninput="calculatePPF()" class="form-input">
+          <div class="input-hint">Current: 7.1% p.a. (2024-25)</div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Maturity Amount</div>
+          <div class="result-amount" id="ppfMaturity">₹30.37 L</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Invested</div>
+              <div class="breakdown-value" id="ppfInvested">₹22.5 L</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Interest</div>
+              <div class="breakdown-value" id="ppfInterest">₹7.87 L</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculatePPF() {
+  const yearly = parseFloat(document.getElementById('ppfAmount').value) || 0;
+  const years = parseFloat(document.getElementById('ppfYears').value) || 0;
+  const rate = parseFloat(document.getElementById('ppfRate').value) || 0;
+
+  const yearlyRate = rate / 100;
+  let maturity = 0;
+  let principal = 0;
+
+  for (let y = 1; y <= years; y++) {
+    principal += yearly;
+    maturity += yearly * Math.pow(1 + yearlyRate, years - y + 1);
+  }
+
+  const interest = maturity - principal;
+
+  document.getElementById('ppfMaturity').textContent = formatINR(maturity);
+  document.getElementById('ppfInvested').textContent = formatINR(principal);
+  document.getElementById('ppfInterest').textContent = formatINR(interest);
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  if (n >= 1000) return '₹' + (n/1000).toFixed(2) + ' K';
+  return '₹' + n.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculatePPF();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

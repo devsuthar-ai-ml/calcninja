@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Tax कैलकुलेटर 2024-25 | CalcNinja</title>
+<meta name="description" content="फ्री Income Tax कैलकुलेटर। 2024-25 के लिए tax निकालें। Old vs New regime।">
+<meta name="keywords" content="income tax calculator, income tax 2024-25, tax slab, tax calculator india">
+<link rel="canonical" href="https://calcninja.vercel.app/hi/income-tax-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">होम</a><a href="/tools/income-tax-calculator">English</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">होम</a><a href="/tools/income-tax-calculator" onclick="toggleMenu()">English</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🧾 Income Tax कैलकुलेटर</h1>
+      <p>2024-25 के लिए अपना Income Tax निकालें</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Gross Income (₹)</label>
+          <input type="number" id="taxIncome" value="1000000" min="0" step="50000" oninput="calculateTax()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>80C Deductions (₹)</label>
+          <input type="number" id="tax80C" value="150000" min="0" max="150000" step="10000" oninput="calculateTax()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Medical Insurance (₹)</label>
+          <input type="number" id="tax80D" value="25000" min="0" max="50000" step="5000" oninput="calculateTax()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Tax Regime</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button id="taxRegimeOld" class="gst-op" onclick="setTaxRegime('old',this)">Old Regime</button>
+            <button id="taxRegimeNew" class="gst-op active" onclick="setTaxRegime('new',this)">New Regime</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Income Tax (2024-25)</div>
+          <div class="result-amount" id="taxAmount">₹1,23,200</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Gross Income</div>
+              <div class="breakdown-value" id="taxGrossIncome">₹25,00,000</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Taxable Income</div>
+              <div class="breakdown-value" id="taxTaxable">₹23,25,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+let taxRegime = 'new';
+
+function calculateTax() {
+  const income = parseFloat(document.getElementById('taxIncome').value) || 0;
+  let deductions = 0;
+
+  if (taxRegime === 'old') {
+    deductions = (parseFloat(document.getElementById('tax80C').value) || 0) + (parseFloat(document.getElementById('tax80D').value) || 0);
+  }
+
+  const taxable = income - deductions;
+  let tax = 0;
+
+  if (taxRegime === 'new') {
+    if (taxable <= 300000) tax = 0;
+    else if (taxable <= 700000) tax = (taxable - 300000) * 0.05;
+    else if (taxable <= 1000000) tax = 20000 + (taxable - 700000) * 0.10;
+    else if (taxable <= 1200000) tax = 50000 + (taxable - 1000000) * 0.15;
+    else if (taxable <= 1500000) tax = 80000 + (taxable - 1200000) * 0.20;
+    else tax = 140000 + (taxable - 1500000) * 0.30;
+  }
+
+  const cess = tax * 0.04;
+  const totalTax = tax + cess;
+
+  document.getElementById('taxAmount').textContent = formatINR(totalTax);
+  document.getElementById('taxGrossIncome').textContent = formatINR(income);
+  document.getElementById('taxTaxable').textContent = formatINR(taxable);
+}
+
+function setTaxRegime(regime, el) {
+  taxRegime = regime;
+  document.getElementById('taxRegimeOld').classList.remove('active');
+  document.getElementById('taxRegimeNew').classList.remove('active');
+  if (regime === 'old') document.getElementById('taxRegimeOld').classList.add('active');
+  else document.getElementById('taxRegimeNew').classList.add('active');
+  calculateTax();
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  return '₹' + (n/1000).toFixed(2) + ' K';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateTax();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

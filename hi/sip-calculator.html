@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP कैलकुलेटर - Mutual Fund SIP कैलकुलेटर | CalcNinja</title>
+<meta name="description" content="फ्री SIP कैलकुलेटर। Mutual fund SIP returns को तुरंत calculate करें। Systematic Investment Plan calculator।">
+<meta name="keywords" content="sip calculator, sip return calculator, mutual fund sip, sip kya hai, sip calculator india">
+<link rel="canonical" href="https://calcninja.vercel.app/hi/sip-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">होम</a><a href="/tools/sip-calculator">English</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">होम</a><a href="/hi/emi-calculator" onclick="toggleMenu()">EMI</a><a href="/tools/sip-calculator" onclick="toggleMenu()">English</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>📈 SIP कैलकुलेटर</h1>
+      <p>Mutual fund SIP returns को तुरंत निकालें</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>हर महीने निवेश (₹)</label>
+          <input type="number" id="sipAmount" min="500" max="1000000" step="500" value="5000" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipAmountSlider" min="500" max="1000000" step="500" value="5000" oninput="syncInput('sipAmount', this); calculateSIP()" class="range-input">
+        </div>
+
+        <div class="form-group">
+          <label>Expected Return (%)</label>
+          <input type="number" id="sipRate" min="4" max="30" step="0.5" value="12" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipRateSlider" min="4" max="30" step="0.5" value="12" oninput="syncInput('sipRate', this); calculateSIP()" class="range-input">
+        </div>
+
+        <div class="form-group">
+          <label>साल</label>
+          <input type="number" id="sipYears" min="1" max="50" step="1" value="10" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipYearsSlider" min="1" max="50" step="1" value="10" oninput="syncInput('sipYears', this); calculateSIP()" class="range-input">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">कुल Corpus</div>
+          <div class="result-amount" id="sipTotal">₹11.61 L</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">निवेश किया गया</div>
+              <div class="breakdown-value" id="sipInvested">₹6.00 L</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Returns</div>
+              <div class="breakdown-value" id="sipReturns">₹5.61 L</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>SIP क्या है? 📈</h2>
+      <p><strong>SIP = Systematic Investment Plan</strong>। हर महीने एक fixed amount से mutual fund में निवेश करते हो।</p>
+      <h3>SIP के फायदे</h3>
+      <ul style="padding-left:1.5rem">
+        <li>✓ Rupee Cost Averaging</li>
+        <li>✓ Long term wealth creation</li>
+        <li>✓ Disciplined investing</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculateSIP() {
+  const monthly = parseFloat(document.getElementById('sipAmount').value) || 0;
+  const rate = parseFloat(document.getElementById('sipRate').value) || 0;
+  const years = parseFloat(document.getElementById('sipYears').value) || 0;
+
+  if (monthly <= 0 || rate <= 0 || years <= 0) return;
+
+  const monthlyRate = rate / 12 / 100;
+  const months = years * 12;
+  const invested = monthly * months;
+  const fv = monthly * (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate * (1 + monthlyRate);
+
+  document.getElementById('sipTotal').textContent = formatINR(fv);
+  document.getElementById('sipInvested').textContent = formatINR(invested);
+  document.getElementById('sipReturns').textContent = formatINR(fv - invested);
+
+  updateSliders();
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  return '₹' + (n/1000).toFixed(2) + ' K';
+}
+
+function syncInput(id, el) { document.getElementById(id).value = el.value; }
+
+function updateSliders() {
+  document.getElementById('sipAmountSlider').value = document.getElementById('sipAmount').value;
+  document.getElementById('sipRateSlider').value = document.getElementById('sipRate').value;
+  document.getElementById('sipYearsSlider').value = document.getElementById('sipYears').value;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateSIP();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+
+</body>
+</html>

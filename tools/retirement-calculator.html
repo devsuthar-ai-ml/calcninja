@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retirement Savings Calculator | CalcNinja</title>
+<meta name="description" content="Calculate how much you need to save for retirement. Retirement planning calculator with inflation adjustment.">
+<meta name="keywords" content="retirement calculator, retirement planning calculator, retirement savings calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/retirement-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🏖️ Retirement Calculator</h1>
+      <p>Plan your retirement savings with inflation adjustment</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Current Age</label>
+          <input type="number" id="retAge" value="30" min="18" max="80" step="1" oninput="calculateRetirement()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Retirement Age</label>
+          <input type="number" id="retRetireAge" value="60" min="30" max="100" step="1" oninput="calculateRetirement()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Current Monthly Expenses (₹)</label>
+          <input type="number" id="retExpense" value="50000" min="0" step="5000" oninput="calculateRetirement()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Life Expectancy</label>
+          <input type="number" id="retLifeExp" value="90" min="60" max="120" step="1" oninput="calculateRetirement()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Annual Return (%)</label>
+          <input type="number" id="retReturn" value="7" min="0" max="20" step="0.5" oninput="calculateRetirement()" class="form-input">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Corpus Needed at Retirement</div>
+          <div class="result-amount" id="retCorpus">₹3.5 Cr</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Years to Retirement</div>
+              <div class="breakdown-value" id="retYears">30 yr</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Retirement Years</div>
+              <div class="breakdown-value" id="retY">30 yr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculateRetirement() {
+  const age = parseFloat(document.getElementById('retAge').value) || 0;
+  const retireAge = parseFloat(document.getElementById('retRetireAge').value) || 0;
+  const monthlyExp = parseFloat(document.getElementById('retExpense').value) || 0;
+  const lifeExp = parseFloat(document.getElementById('retLifeExp').value) || 0;
+  const returnRate = parseFloat(document.getElementById('retReturn').value) || 0;
+
+  const yrsToRetire = retireAge - age;
+  const retireYrs = lifeExp - retireAge;
+  const monthlyRate = returnRate / 12 / 100;
+  const months = retireYrs * 12;
+
+  const futureMonthlyExp = monthlyExp * Math.pow(1 + 0.06/12, months);
+  const corpusNeeded = futureMonthlyExp * (Math.pow(1 + monthlyRate, months) - 1) / (monthlyRate * Math.pow(1 + monthlyRate, months));
+
+  document.getElementById('retCorpus').textContent = formatINR(corpusNeeded);
+  document.getElementById('retYears').textContent = yrsToRetire + ' yr';
+  document.getElementById('retY').textContent = retireYrs + ' yr';
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  return '₹' + (n/1000).toFixed(2) + ' K';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateRetirement();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

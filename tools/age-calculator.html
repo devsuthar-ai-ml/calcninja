@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator | CalcNinja</title>
+  <link rel="canonical" href="https://calcninja.vercel.app/tools/age-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body data-theme="light">
+  <header>
+    <div class="header-container">
+      <a href="/" class="logo">🥷 CalcNinja</a>
+      <button class="theme-toggle">🌙</button>
+    </div>
+  </header>
+
+  <div class="tool-page">
+    <div class="tool-layout">
+      <div class="tool-form">
+        <h2>🎂 Age Calculator</h2>
+        <div class="input-group">
+          <label>Date of Birth</label>
+          <input type="date" id="dob" value="2000-01-01" onchange="calcAgeCalc()">
+        </div>
+        <div class="result-box">
+          <h3>Your Age</h3>
+          <div class="amount" id="resultMain">0</div>
+          <div class="breakdown" id="resultBreakdown"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js" defer></script>
+  <script src="/js/tools.js" defer></script>
+
+  <script>
+    function calcAgeCalc() {
+      const dob = document.getElementById('dob').value;
+      if (!dob) return;
+      
+      const result = calcAge(new Date(dob));
+      
+      document.getElementById('resultMain').innerText = `${result.years} Y ${result.months} M`;
+      document.getElementById('resultBreakdown').innerHTML = `
+        <div class="result-card"><span>Days Old</span><strong>${result.totalDays}</strong></div>
+        <div class="result-card"><span>Days to Birthday</span><strong>${result.daysToNext}</strong></div>
+      `;
+    }
+    window.addEventListener('load', () => setTimeout(calcAgeCalc, 500));
+  </script>
+</body>
+</html>

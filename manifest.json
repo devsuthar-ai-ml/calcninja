@@ -1,0 +1,55 @@
+{
+  "name": "CalcNinja - Financial Calculator",
+  "short_name": "CalcNinja",
+  "description": "India's best free financial calculator for EMI, SIP, GST, taxes and more",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%232563EB' width='192' height='192'/><text x='96' y='140' font-size='120' text-anchor='middle' fill='white'>🥷</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%232563EB' width='512' height='512'/><text x='256' y='400' font-size='320' text-anchor='middle' fill='white'>🥷</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["finance", "utilities", "education"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%232563EB' width='540' height='720'/><text x='270' y='360' font-size='100' text-anchor='middle' fill='white'>CalcNinja</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "EMI Calculator",
+      "short_name": "EMI",
+      "description": "Calculate monthly loan EMI",
+      "url": "/tools/emi-calculator.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23059669' width='96' height='96'/><text x='48' y='75' font-size='60' text-anchor='middle' fill='white'>🏦</text></svg>", "sizes": "96x96"}]
+    },
+    {
+      "name": "SIP Calculator",
+      "short_name": "SIP",
+      "description": "Calculate mutual fund SIP returns",
+      "url": "/tools/sip-calculator.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23059669' width='96' height='96'/><text x='48' y='75' font-size='60' text-anchor='middle' fill='white'>📈</text></svg>", "sizes": "96x96"}]
+    },
+    {
+      "name": "GST Calculator",
+      "short_name": "GST",
+      "description": "Calculate GST on any amount",
+      "url": "/tools/gst-calculator.html",
+      "icons": [{"src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23059669' width='96' height='96'/><text x='48' y='75' font-size='60' text-anchor='middle' fill='white'>🧮</text></svg>", "sizes": "96x96"}]
+    }
+  ]
+}

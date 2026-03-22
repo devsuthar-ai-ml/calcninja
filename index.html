@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>CalcNinja — Free EMI, SIP, GST Calculator India | 15+ Tools</title>
+<meta name="description" content="India's #1 free financial calculator. EMI calculator, SIP calculator, GST calculator, income tax calculator & 15+ tools. No signup, instant results. Used by 50,000+ Indians.">
+<meta name="keywords" content="emi calculator, emi calculator india, home loan emi calculator, sip calculator, sip return calculator, gst calculator, gst calculator india, income tax calculator 2024-25, fd calculator, ppf calculator, compound interest calculator, retirement calculator india, bmi calculator, currency converter, emi calculator hindi, calcninja, free financial calculator india, loan emi calculator, mutual fund calculator, tax calculator india">
+
+<link rel="canonical" href="https://calcninja.vercel.app/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta name="theme-color" content="#2563EB">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://calcninja.vercel.app/">
+<meta property="og:title" content="CalcNinja — Free Financial Calculators India">
+<meta property="og:description" content="Free EMI, SIP, GST & 15+ calculators. No signup. India's most trusted calculator site.">
+<meta property="og:locale" content="en_IN">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CalcNinja — Free Financial Calculators">
+<meta name="twitter:description" content="Free EMI, SIP, GST & 15+ tools. No signup. Instant.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://calcninja.vercel.app/#website",
+      "url": "https://calcninja.vercel.app/",
+      "name": "CalcNinja",
+      "description": "Free financial calculators for India"
+    },
+    {
+      "@type": "ItemList",
+      "name": "Free Financial Calculators",
+      "numberOfItems": 15
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav">
+    <a href="/">Home</a>
+    <a href="/#tools">Tools</a>
+    <a href="/blog/how-to-calculate-emi">Blog</a>
+    <a href="/hi/emi-calculator">हिंदी</a>
+  </nav>
+  <div class="header-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Dark/Light mode">🌙</button>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">🏠 Home</a>
+  <a href="/#tools" onclick="toggleMenu()">🔢 All Tools</a>
+  <a href="/tools/emi-calculator" onclick="toggleMenu()">🏠 EMI Calculator</a>
+  <a href="/tools/sip-calculator" onclick="toggleMenu()">📈 SIP Calculator</a>
+  <a href="/tools/gst-calculator" onclick="toggleMenu()">🧾 GST Calculator</a>
+  <a href="/hi/emi-calculator" onclick="toggleMenu()">🇮🇳 हिंदी में</a>
+</nav>
+
+<main>
+  <div class="mascot-row">
+    <div class="mascot">🥷</div>
+    <div class="mascot-bubble">
+      Namaste! Main Ninja hoon — India ka free calculator expert.<br>
+      <strong>Kya calculate karna hai aaj?</strong>
+    </div>
+  </div>
+
+  <section class="hero">
+    <h1>India's Smartest <span class="text-primary">Free</span> Financial Calculators</h1>
+    <p class="hero-sub">EMI, SIP, GST, Tax aur 15+ tools — bilkul free, koi login nahi, instant result</p>
+    <div class="search-wrap">
+      <input type="search" id="toolSearch" placeholder="🔍 Type karo — EMI, SIP, GST, Tax..." oninput="filterTools(this.value)">
+    </div>
+    <div class="trust-badges">
+      <span class="badge">✓ 15+ Tools</span>
+      <span class="badge">✓ No Login</span>
+      <span class="badge">✓ 100% Free</span>
+      <span class="badge">✓ No Data Stored</span>
+      <span class="badge">✓ Offline Works</span>
+    </div>
+  </section>
+
+  <section class="quick-calc-section">
+    <div class="quick-calc-tabs">
+      <button class="qtab active" onclick="switchQuickCalc('emi', this)">🏠 EMI</button>
+      <button class="qtab" onclick="switchQuickCalc('sip', this)">📈 SIP</button>
+      <button class="qtab" onclick="switchQuickCalc('gst', this)">🧾 GST</button>
+      <button class="qtab" onclick="switchQuickCalc('fd', this)">🏦 FD</button>
+    </div>
+    
+    <div class="quick-calc-body">
+      <div id="qc-emi" class="qc-panel active">
+        <div class="qc-input-row">
+          <div class="qc-field">
+            <label>Loan Amount <span class="qc-val" id="qc-amt-val">₹10 L</span></label>
+            <input type="range" id="qc-amt" min="100000" max="10000000" step="50000" value="1000000" oninput="calcEMI()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Rate <span class="qc-val" id="qc-rate-val">8.5%</span></label>
+            <input type="range" id="qc-rate" min="5" max="24" step="0.5" value="8.5" oninput="calcEMI()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Tenure <span class="qc-val" id="qc-yr-val">20 yr</span></label>
+            <input type="range" id="qc-yr" min="1" max="30" step="1" value="20" oninput="calcEMI()" class="range-input">
+          </div>
+        </div>
+        <div class="qc-result">
+          <div class="qc-result-label">Har mahine EMI hogi</div>
+          <div class="qc-result-main" id="qcEmiAmount">₹8,678</div>
+          <div class="qc-result-detail">
+            Kul: <strong id="qcEmiTotal">₹20.83 L</strong> | Byaaj: <strong id="qcEmiInterest">₹10.83 L</strong>
+          </div>
+          <div class="qc-actions">
+            <button onclick="whatsappShare('EMI', document.getElementById('qcEmiAmount').textContent)" class="btn-wa">📤 WhatsApp</button>
+            <button onclick="copyText('EMI: '+document.getElementById('qcEmiAmount').textContent)" class="btn-copy">📋 Copy</button>
+            <a href="/tools/emi-calculator" class="btn-detail">Details →</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="qc-sip" class="qc-panel">
+        <div class="qc-input-row">
+          <div class="qc-field">
+            <label>Monthly SIP <span class="qc-val" id="qcs-amt-val">₹5,000</span></label>
+            <input type="range" id="qcs-amt" min="500" max="100000" step="500" value="5000" oninput="calcSIP()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Return Rate <span class="qc-val" id="qcs-rate-val">12%</span></label>
+            <input type="range" id="qcs-rate" min="4" max="30" step="0.5" value="12" oninput="calcSIP()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Years <span class="qc-val" id="qcs-yr-val">10 yr</span></label>
+            <input type="range" id="qcs-yr" min="1" max="40" step="1" value="10" oninput="calcSIP()" class="range-input">
+          </div>
+        </div>
+        <div class="qc-result">
+          <div class="qc-result-label">Total Corpus banega</div>
+          <div class="qc-result-main" id="qcSipTotal">₹11.61 L</div>
+          <div class="qc-result-detail">
+            Invested: <strong id="qcSipInvested">₹6.00 L</strong> | Profit: <strong id="qcSipProfit">₹5.61 L</strong>
+          </div>
+          <div class="qc-actions">
+            <button onclick="whatsappShare('SIP', document.getElementById('qcSipTotal').textContent)" class="btn-wa">📤 WhatsApp</button>
+            <a href="/tools/sip-calculator" class="btn-detail">Details →</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="qc-gst" class="qc-panel">
+        <div class="qc-input-row">
+          <div class="qc-field" style="flex:2">
+            <label>Amount (₹)</label>
+            <input type="number" id="qcg-amt" value="1000" min="1" oninput="calcGST()" class="number-input" placeholder="Amount daalo">
+          </div>
+          <div class="qc-field">
+            <label>GST Rate</label>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="gst-rate active" onclick="setGSTRate(5,this)">5%</button>
+              <button class="gst-rate" onclick="setGSTRate(12,this)">12%</button>
+              <button class="gst-rate" onclick="setGSTRate(18,this)">18%</button>
+              <button class="gst-rate" onclick="setGSTRate(28,this)">28%</button>
+            </div>
+          </div>
+        </div>
+        <div class="qc-result">
+          <div class="qc-result-label" id="gst-result-label">GST add karke total</div>
+          <div class="qc-result-main" id="qcGstTotal">₹1,180</div>
+          <div class="qc-result-detail">
+            Original: <strong id="qcGstOriginal">₹1,000</strong> | GST: <strong id="qcGstAmount">₹180</strong>
+          </div>
+          <div class="qc-actions">
+            <button onclick="whatsappShare('GST', document.getElementById('qcGstTotal').textContent)" class="btn-wa">📤 WhatsApp</button>
+            <a href="/tools/gst-calculator" class="btn-detail">Details →</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="qc-fd" class="qc-panel">
+        <div class="qc-input-row">
+          <div class="qc-field">
+            <label>Principal <span class="qc-val" id="qcf-amt-val">₹1 L</span></label>
+            <input type="range" id="qcf-amt" min="10000" max="5000000" step="10000" value="100000" oninput="calcFD()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Rate <span class="qc-val" id="qcf-rate-val">7%</span></label>
+            <input type="range" id="qcf-rate" min="4" max="12" step="0.25" value="7" oninput="calcFD()" class="range-input">
+          </div>
+          <div class="qc-field">
+            <label>Years <span class="qc-val" id="qcf-yr-val">3 yr</span></label>
+            <input type="range" id="qcf-yr" min="1" max="10" step="1" value="3" oninput="calcFD()" class="range-input">
+          </div>
+        </div>
+        <div class="qc-result">
+          <div class="qc-result-label">Maturity pe milenge</div>
+          <div class="qc-result-main" id="qcFdTotal">₹1.23 L</div>
+          <div class="qc-result-detail">
+            Principal: <strong id="qcFdPrincipal">₹1.00 L</strong> | Interest: <strong id="qcFdInterest">₹22,504</strong>
+          </div>
+          <div class="qc-actions">
+            <button onclick="whatsappShare('FD', document.getElementById('qcFdTotal').textContent)" class="btn-wa">📤 WhatsApp</button>
+            <a href="/tools/fd-calculator" class="btn-detail">Details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="affiliate-section">
+    <div class="affiliate-label">Recommended Partners</div>
+    <div class="affiliate-row">
+      <a href="https://groww.in/?ref=calcninja" target="_blank" class="aff-card" onclick="trackAff('groww')">
+        <span class="aff-icon">📱</span>
+        <div>
+          <div class="aff-name">Start SIP on Groww</div>
+          <div class="aff-desc">₹0 commission mutual funds</div>
+        </div>
+        <span class="aff-cta">Open →</span>
+      </a>
+      <a href="https://zerodha.com/?ref=calcninja" target="_blank" class="aff-card" onclick="trackAff('zerodha')">
+        <span class="aff-icon">📊</span>
+        <div>
+          <div class="aff-name">Open Demat on Zerodha</div>
+          <div class="aff-desc">India's #1 stock broker</div>
+        </div>
+        <span class="aff-cta">Open →</span>
+      </a>
+      <a href="https://policybazaar.com/?ref=calcninja" target="_blank" class="aff-card" onclick="trackAff('policybazaar')">
+        <span class="aff-icon">🛡️</span>
+        <div>
+          <div class="aff-name">Compare Insurance</div>
+          <div class="aff-desc">Best rates guaranteed</div>
+        </div>
+        <span class="aff-cta">Compare →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2 class="section-title">All <span class="text-primary">15 Calculators</span></h2>
+    <p class="section-sub">Choose any tool below — all 100% free</p>
+    <div class="tools-grid" id="toolsGrid"></div>
+    <div id="noResults" style="display:none;text-align:center;padding:3rem;color:var(--text-muted)">
+      <div style="font-size:3rem">🤔</div>
+      <p>"<span id="noResultsQuery"></span>" nahi mila. Try: EMI, SIP, GST, Tax</p>
+    </div>
+  </section>
+
+  <section class="email-section">
+    <div class="email-card">
+      <div class="email-icon">📩</div>
+      <h3>Tax season aane se pehle ready raho</h3>
+      <p>Free: Tax saving tips, interest rate updates, new calculator alerts</p>
+      <div class="email-form">
+        <input type="email" id="emailInput" placeholder="aapka@email.com">
+        <button onclick="subscribeEmail()" class="btn-primary">Subscribe</button>
+      </div>
+      <p class="email-note">No spam. <span id="subCount">2,847</span> subscribers.</p>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <h2 class="section-title">Kyun <span class="text-primary">CalcNinja?</span></h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Instant Result</h3>
+        <p>Slider chalao — answer aata rahega. Koi "Calculate" button press nahi.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Privacy First</h3>
+        <p>Koi data server pe nahi jaata. Sab kuch sirf aapke device pe.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile + Offline</h3>
+        <p>Internet band ho tab bhi kaam karta hai. Plane mein bhi calculate karo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
+    <h2 class="section-title">FAQ</h2>
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-q" onclick="toggleFAQ(this)" itemprop="name">Kya CalcNinja bilkul free hai?</button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div itemprop="text">Haan, 100% free hai. Koi hidden charge nahi, koi premium plan nahi, koi login nahi.</div>
+      </div>
+    </div>
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-q" onclick="toggleFAQ(this)" itemprop="name">Kya calculations accurate hain?</button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div itemprop="text">Haan. Official formulas use karte hain. Bank calculators se match karte hain.</div>
+      </div>
+    </div>
+    <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+      <button class="faq-q" onclick="toggleFAQ(this)" itemprop="name">Mera data safe hai?</button>
+      <div class="faq-a" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+        <div itemprop="text">Bilkul. Sab calculations aapke browser mein hoti hain. Koi data server nahi jaata.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Calc🥷Ninja</a>
+      <p>India's smartest free financial calculators. No login. No data stored.</p>
+      <div class="footer-social">
+        <a href="https://twitter.com/calcninja" target="_blank">𝕏</a>
+        <a href="https://instagram.com/calcninja" target="_blank">📸</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Popular Tools</h4>
+      <a href="/tools/emi-calculator">EMI Calculator</a>
+      <a href="/tools/sip-calculator">SIP Calculator</a>
+      <a href="/tools/gst-calculator">GST Calculator</a>
+    </div>
+    <div class="footer-col">
+      <h4>हिंदी 🇮🇳</h4>
+      <a href="/hi/emi-calculator">EMI Calculator</a>
+      <a href="/hi/sip-calculator">SIP Calculator</a>
+      <a href="/hi/gst-calculator">GST Calculator</a>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <a href="/blog/how-to-calculate-emi">EMI कैसे निकालें</a>
+      <a href="/blog/sip-vs-fd-which-is-better">SIP vs FD</a>
+      <a href="/blog/how-to-save-income-tax-2025">Tax बचाएं</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span class="auto-year">2025</span> CalcNinja. Made with ❤️ in India. All calculations use official formulas.</p>
+    <div class="footer-legal">
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/disclaimer.html">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<button id="historyBtn" onclick="toggleHistory()" style="position:fixed;bottom:24px;left:20px;background:var(--primary);color:white;border:none;border-radius:50px;padding:11px 18px;font-size:0.85rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(37,99,235,0.35);display:flex;align-items:center;gap:6px;z-index:80">
+  📊 History
+  <span id="histBadge" style="background:white;color:var(--primary);border-radius:50%;width:20px;height:20px;display:none;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700">0</span>
+</button>
+
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:24px;right:20px;background:var(--primary);color:white;border:none;border-radius:50%;width:44px;height:44px;font-size:1.1rem;cursor:pointer;display:none;box-shadow:0 4px 16px rgba(37,99,235,0.35);z-index:80">↑</button>
+
+<div id="histPanel" style="position:fixed;top:0;left:0;bottom:0;width:320px;max-width:100vw;background:var(--bg-card);z-index:200;transform:translateX(-100%);transition:transform 0.3s;box-shadow:4px 0 24px rgba(0,0,0,0.12);overflow-y:auto;padding:1.25rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <strong>📊 History</strong>
+    <button onclick="toggleHistory()" style="background:none;border:none;font-size:1.2rem;cursor:pointer">✕</button>
+  </div>
+  <div id="histList"></div>
+</div>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+<script src="/js/main.js" defer></script>
+<script src="/js/tools.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FD Calculator India — Fixed Deposit Calculator | CalcNinja</title>
+<meta name="description" content="Free FD calculator for India. Calculate Fixed Deposit returns with interest. Support quarterly, monthly, half-yearly compounding. No signup.">
+<meta name="keywords" content="fd calculator, fixed deposit calculator, fd interest calculator india, bank fd calculator, sbi fd calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/fd-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a><a href="/hi/fd-calculator">हिंदी</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a><a href="/tools/ppf-calculator" onclick="toggleMenu()">PPF</a><a href="/hi/fd-calculator" onclick="toggleMenu()">हिंदी</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🏦 FD Calculator</h1>
+      <p>Calculate your Fixed Deposit maturity amount instantly</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Principal Amount (₹)</label>
+          <input type="number" id="fdPrincipal" value="100000" min="0" step="10000" oninput="calculateFD()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Annual Rate (%)</label>
+          <input type="number" id="fdRate" value="7" min="0" max="10" step="0.25" oninput="calculateFD()" class="form-input">
+          <div class="input-hint">SBI: 6-7%, HDFC: 6.5-7.25%, ICICI: 6-7%</div>
+        </div>
+        <div class="form-group">
+          <label>Period (Years)</label>
+          <input type="number" id="fdYears" value="3" min="1" max="10" step="1" oninput="calculateFD()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Compounding</label>
+          <select id="fdCompound" onchange="calculateFD()" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px">
+            <option value="quarterly">Quarterly</option>
+            <option value="monthly">Monthly</option>
+            <option value="annual">Annual</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Maturity Amount</div>
+          <div class="result-amount" id="fdMaturity">₹1,22,505</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Principal</div>
+              <div class="breakdown-value" id="fdPrincipal2">₹1,00,000</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Interest</div>
+              <div class="breakdown-value" id="fdInterest">₹22,505</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h3>Top Banks FD Rates (2025)</h3>
+          <table class="emi-table">
+            <tr><td>SBI</td><td>6.0% - 7.0%</td></tr>
+            <tr><td>HDFC</td><td>6.5% - 7.25%</td></tr>
+            <tr><td>ICICI</td><td>6.0% - 7.0%</td></tr>
+            <tr><td>Axis</td><td>6.2% - 7.1%</td></tr>
+            <tr><td>Kotak</td><td>6.5% - 7.2%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>FD क्या है? 🏦</h2>
+      <p>Fixed Deposit एक सुरक्षित निवेश है जिसमें आप अपना पैसा bank को देते हो fixed period के लिए और उसे fixed interest मिलता है।</p>
+      <h3>FD के फायदे</h3>
+      <ul style="padding-left:1.5rem">
+        <li>✓ Guaranteed returns</li>
+        <li>✓ बिल्कुल safe है (DICGC covered)</li>
+        <li>✓ कोई market risk नहीं</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculateFD() {
+  const p = parseFloat(document.getElementById('fdPrincipal').value) || 0;
+  const r = parseFloat(document.getElementById('fdRate').value) || 0;
+  const t = parseFloat(document.getElementById('fdYears').value) || 0;
+  const compound = document.getElementById('fdCompound').value;
+
+  let n;
+  if (compound === 'quarterly') n = 4;
+  else if (compound === 'monthly') n = 12;
+  else n = 1;
+
+  const a = p * Math.pow(1 + r/(100*n), n*t);
+  const interest = a - p;
+
+  document.getElementById('fdMaturity').textContent = formatINR(a);
+  document.getElementById('fdPrincipal2').textContent = formatINR(p);
+  document.getElementById('fdInterest').textContent = formatINR(interest);
+}
+
+function formatINR(n) {
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  if (n >= 1000) return '₹' + (n/1000).toFixed(2) + ' K';
+  return '₹' + n.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateFD();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

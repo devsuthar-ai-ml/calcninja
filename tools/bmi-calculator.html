@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator India — Body Mass Index Calculator | CalcNinja</title>
+<meta name="description" content="Free BMI calculator. Calculate body mass index with height and weight. Check if you're underweight, normal, overweight or obese.">
+<meta name="keywords" content="bmi calculator, bmi calculator india, body mass index calculator, weight calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/bmi-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>💪 BMI Calculator</h1>
+      <p>Check your Body Mass Index instantly</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Height (cm)</label>
+          <input type="number" id="bmiHeight" value="170" min="100" max="250" step="1" oninput="calculateBMI()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" id="bmiWeight" value="70" min="20" max="300" step="0.5" oninput="calculateBMI()" class="form-input">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Your BMI</div>
+          <div class="result-amount" id="bmiValue">24.2</div>
+          <div style="font-size:1rem;color:var(--text-muted);margin-top:0.5rem;text-align:center" id="bmiStatus">Normal Weight</div>
+        </div>
+
+        <div class="result-section">
+          <h3>BMI Categories</h3>
+          <table class="emi-table">
+            <tr><td>Underweight</td><td>&lt; 18.5</td><td style="color:#3b82f6">🔵</td></tr>
+            <tr><td>Normal</td><td>18.5 - 24.9</td><td style="color:#10b981">🟢</td></tr>
+            <tr><td>Overweight</td><td>25 - 29.9</td><td style="color:#f59e0b">🟡</td></tr>
+            <tr><td>Obese</td><td>30+</td><td style="color:#ef4444">🔴</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+function calculateBMI() {
+  const height = parseFloat(document.getElementById('bmiHeight').value) || 0;
+  const weight = parseFloat(document.getElementById('bmiWeight').value) || 0;
+
+  const heightM = height / 100;
+  const bmi = weight / (heightM * heightM);
+
+  document.getElementById('bmiValue').textContent = bmi.toFixed(1);
+
+  let status, color;
+  if (bmi < 18.5) {
+    status = 'Underweight';
+    color = '#3b82f6';
+  } else if (bmi < 25) {
+    status = 'Normal Weight';
+    color = '#10b981';
+  } else if (bmi < 30) {
+    status = 'Overweight';
+    color = '#f59e0b';
+  } else {
+    status = 'Obese';
+    color = '#ef4444';
+  }
+
+  const statusEl = document.getElementById('bmiStatus');
+  statusEl.textContent = status;
+  statusEl.style.color = color;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateBMI();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

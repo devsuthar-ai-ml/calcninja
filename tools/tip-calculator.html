@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Calculator | Restaurant Bill Splitter | CalcNinja</title>
+<meta name="description" content="Free tip calculator. Calculate how much tip to give and split bill among friends. Easy bill splitting calculator.">
+<meta name="keywords" content="tip calculator, bill splitter, bill calculator, split bill calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/tip-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">Home</a><a href="/#tools">Tools</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">Home</a><a href="/#tools" onclick="toggleMenu()">Tools</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🪙 Tip Calculator</h1>
+      <p>Calculate tip and split bill easily</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>Bill Amount (₹)</label>
+          <input type="number" id="tipBill" value="1000" min="0" step="10" oninput="calculateTip()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Tip %</label>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <button class="gst-rate active" onclick="setTip(10,this)">10%</button>
+            <button class="gst-rate" onclick="setTip(15,this)">15%</button>
+            <button class="gst-rate" onclick="setTip(18,this)">18%</button>
+            <button class="gst-rate" onclick="setTip(20,this)">20%</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Custom Tip %</label>
+          <input type="number" id="tipPercent" value="10" min="0" max="100" step="1" oninput="calculateTip()" class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Number of People</label>
+          <input type="number" id="tipPeople" value="1" min="1" max="50" step="1" oninput="calculateTip()" class="form-input">
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Tip Amount</div>
+          <div class="result-amount" id="tipAmount">₹100</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Total Bill</div>
+              <div class="breakdown-value" id="tipTotal">₹1,100</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Per Person</div>
+              <div class="breakdown-value" id="tipPerPerson">₹1,100</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+let currentTip = 10;
+
+function setTip(pct, el) {
+  currentTip = pct;
+  document.querySelectorAll('.gst-rate').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tipPercent').value = pct;
+  calculateTip();
+}
+
+function calculateTip() {
+  const bill = parseFloat(document.getElementById('tipBill').value) || 0;
+  const tipPct = parseFloat(document.getElementById('tipPercent').value) || 0;
+  const people = parseFloat(document.getElementById('tipPeople').value) || 1;
+
+  const tipAmount = (bill * tipPct) / 100;
+  const totalBill = bill + tipAmount;
+  const perPerson = totalBill / people;
+
+  document.getElementById('tipAmount').textContent = '₹' + tipAmount.toFixed(0);
+  document.getElementById('tipTotal').textContent = '₹' + totalBill.toFixed(0);
+  document.getElementById('tipPerPerson').textContent = '₹' + perPerson.toFixed(0);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateTip();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

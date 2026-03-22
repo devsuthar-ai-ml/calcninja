@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="hi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST कैलकुलेटर | CalcNinja</title>
+<meta name="description" content="फ्री GST कैलकुलेटर। GST add या remove करें। CGST, SGST calculator।">
+<meta name="keywords" content="gst calculator, gst kya hai, gst rate, cgst sgst">
+<link rel="canonical" href="https://calcninja.vercel.app/hi/gst-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav"><a href="/">होम</a><a href="/tools/gst-calculator">English</a></nav>
+  <div class="header-actions"><button class="theme-toggle" onclick="toggleTheme()">🌙</button><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">होम</a><a href="/tools/gst-calculator" onclick="toggleMenu()">English</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>🧾 GST कैलकुलेटर</h1>
+      <p>GST add करें या remove करें - तुरंत निकालें</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label>राशि (₹)</label>
+          <input type="number" id="gstAmount" value="1000" min="0" step="1" oninput="calculateGST()" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label>GST Rate</label>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+            <button class="gst-rate active" onclick="setGSTRate(5,this)">5%</button>
+            <button class="gst-rate" onclick="setGSTRate(12,this)">12%</button>
+            <button class="gst-rate" onclick="setGSTRate(18,this)">18%</button>
+            <button class="gst-rate" onclick="setGSTRate(28,this)">28%</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Operation</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button class="gst-op active" onclick="setGSTOp('add',this)">GST Add करें</button>
+            <button class="gst-op" onclick="setGSTOp('remove',this)">GST Remove करें</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label" id="gst-result-label">GST के साथ राशि</div>
+          <div class="result-amount" id="gstTotal">₹1,180</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Original</div>
+              <div class="breakdown-value" id="gstOriginal">₹1,000</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">GST (18%)</div>
+              <div class="breakdown-value" id="gstAmount2">₹180</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner"><div class="footer-brand"><a href="/" class="logo">Calc🥷Ninja</a></div></div>
+  <div class="footer-bottom"><p>© 2025 CalcNinja</p></div>
+</footer>
+
+<script>
+let gstRate = 5;
+let gstOp = 'add';
+
+function calculateGST() {
+  const amt = parseFloat(document.getElementById('gstAmount').value) || 0;
+  let total, tax;
+
+  if (gstOp === 'add') {
+    tax = (amt * gstRate) / 100;
+    total = amt + tax;
+    document.getElementById('gst-result-label').textContent = 'GST के साथ राशि';
+  } else {
+    total = amt / (1 + gstRate/100);
+    tax = amt - total;
+    document.getElementById('gst-result-label').textContent = 'GST बिना राशि';
+  }
+
+  document.getElementById('gstTotal').textContent = formatINR(gstOp === 'add' ? total : amt);
+  document.getElementById('gstOriginal').textContent = formatINR(gstOp === 'add' ? amt : total);
+  document.getElementById('gstAmount2').textContent = formatINR(tax);
+}
+
+function setGSTRate(r, el) {
+  gstRate = r;
+  document.querySelectorAll('.gst-rate').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  calculateGST();
+}
+
+function setGSTOp(op, el) {
+  gstOp = op;
+  document.querySelectorAll('.gst-op').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  calculateGST();
+}
+
+function formatINR(n) {
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return '₹' + (n/100000).toFixed(2) + ' L';
+  if (n >= 1000) return '₹' + (n/1000).toFixed(2) + ' K';
+  return '₹' + n.toFixed(2);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateGST();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() { document.getElementById('mobileNav').classList.toggle('open'); }
+</script>
+</body>
+</html>

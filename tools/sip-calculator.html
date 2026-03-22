@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIP Calculator India — Mutual Fund SIP Return Calculator | CalcNinja</title>
+<meta name="description" content="Free SIP calculator for India. Calculate SIP returns on mutual funds. Monthly, quarterly, yearly SIP calculator with projected returns. No signup needed.">
+<meta name="keywords" content="sip calculator, sip return calculator, sip calculator india, mutual fund sip, sip calculator with inflation, best sip calculator">
+<link rel="canonical" href="https://calcninja.vercel.app/tools/sip-calculator">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header id="site-header">
+  <a href="/" class="logo">Calc🥷Ninja</a>
+  <nav class="desktop-nav">
+    <a href="/">Home</a>
+    <a href="/#tools">Tools</a>
+    <a href="/blog/what-is-sip-mutual-fund">Blog</a>
+    <a href="/hi/sip-calculator">हिंदी</a>
+  </nav>
+  <div class="header-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Dark/Light mode">🌙</button>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="/" onclick="toggleMenu()">🏠 Home</a>
+  <a href="/#tools" onclick="toggleMenu()">🔢 All Tools</a>
+  <a href="/tools/emi-calculator" onclick="toggleMenu()">🏠 EMI Calculator</a>
+  <a href="/tools/gst-calculator" onclick="toggleMenu()">🧾 GST Calculator</a>
+  <a href="/hi/sip-calculator" onclick="toggleMenu()">🇮🇳 हिंदी में</a>
+</nav>
+
+<main>
+  <div class="tool-page">
+    <div class="tool-header">
+      <h1>📈 SIP Calculator</h1>
+      <p>Calculate your Systematic Investment Plan returns instantly</p>
+    </div>
+
+    <div class="tool-content">
+      <div class="tool-form">
+        <div class="form-group">
+          <label for="sipAmount">Monthly Investment (₹)</label>
+          <input type="number" id="sipAmount" min="500" max="1000000" step="500" value="5000" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipAmountSlider" min="500" max="1000000" step="500" value="5000" oninput="syncInput('sipAmount', this); calculateSIP()" class="range-input">
+          <div class="input-hint">₹500 से ₹10 लाख तक</div>
+        </div>
+
+        <div class="form-group">
+          <label for="sipRate">Expected Annual Return (%)</label>
+          <input type="number" id="sipRate" min="4" max="30" step="0.5" value="12" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipRateSlider" min="4" max="30" step="0.5" value="12" oninput="syncInput('sipRate', this); calculateSIP()" class="range-input">
+          <div class="input-hint">Equity: 12-18%, Debt: 5-8%</div>
+        </div>
+
+        <div class="form-group">
+          <label for="sipYears">Years</label>
+          <input type="number" id="sipYears" min="1" max="50" step="1" value="10" oninput="calculateSIP()" class="form-input">
+          <input type="range" id="sipYearsSlider" min="1" max="50" step="1" value="10" oninput="syncInput('sipYears', this); calculateSIP()" class="range-input">
+          <div class="input-hint">1 से 50 साल तक</div>
+        </div>
+      </div>
+
+      <div class="tool-info">
+        <div class="result-hero">
+          <div class="result-label">Kul Corpus</div>
+          <div class="result-amount" id="sipTotal">₹11.61 L</div>
+          <div class="result-breakdown">
+            <div class="breakdown-item">
+              <div class="breakdown-label">Invested</div>
+              <div class="breakdown-value" id="sipInvested">₹6.00 L</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">Returns</div>
+              <div class="breakdown-value" id="sipReturns">₹5.61 L</div>
+            </div>
+            <div class="breakdown-item">
+              <div class="breakdown-label">% Gain</div>
+              <div class="breakdown-value" id="sipGain">93.5%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <h3>Year-wise Growth</h3>
+          <div class="table-container">
+            <table class="emi-table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Invested (₹)</th>
+                  <th>Growth (₹)</th>
+                  <th>Total (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="sipYearlyTable">
+                <tr><td colspan="4" style="text-align:center">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h2>SIP Kya Hota Hai? 📈</h2>
+      <p><strong>SIP = Systematic Investment Plan</strong>. Har mahine fixed amount se mutual fund mein invest karte ho. Rupee cost averaging ka fayda milta hai.</p>
+      
+      <h3>SIP vs Lump Sum</h3>
+      <ul style="margin:1rem 0;padding-left:1.5rem">
+        <li>✓ SIP: Consistent investment, risk kam</li>
+        <li>✓ Lump Sum: Jaldi corpus, timing risk</li>
+        <li>✓ SIP best for beginners</li>
+      </ul>
+
+      <h3>Popular Funds (2025)</h3>
+      <ul style="margin:1rem 0;padding-left:1.5rem">
+        <li>📊 Large Cap: 10-12% returns</li>
+        <li>📈 Mid Cap: 12-15% returns</li>
+        <li>🚀 Small Cap: 15-20% returns</li>
+        <li>💰 Multi-Asset: 8-11% returns</li>
+      </ul>
+    </div>
+
+    <div class="tool-share">
+      <button onclick="whatsappShare('SIP', 'Check SIP Calculator')" class="btn-wa">📤 Share</button>
+      <button onclick="copyText('SIP Calculator: https://calcninja.vercel.app/tools/sip-calculator')" class="btn-copy">📋 Copy</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Calc🥷Ninja</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <a href="/tools/emi-calculator">EMI</a>
+      <a href="/tools/gst-calculator">GST</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CalcNinja</p>
+  </div>
+</footer>
+
+<script>
+function calculateSIP() {
+  const monthly = parseFloat(document.getElementById('sipAmount').value) || 0;
+  const rate = parseFloat(document.getElementById('sipRate').value) || 0;
+  const years = parseFloat(document.getElementById('sipYears').value) || 0;
+
+  if (monthly <= 0 || rate <= 0 || years <= 0) return;
+
+  const monthlyRate = rate / 12 / 100;
+  const months = years * 12;
+  const invested = monthly * months;
+  const fv = monthly * (Math.pow(1 + monthlyRate, months) - 1) / monthlyRate * (1 + monthlyRate);
+  const returns = fv - invested;
+
+  document.getElementById('sipTotal').textContent = formatINR(fv);
+  document.getElementById('sipInvested').textContent = formatINR(invested);
+  document.getElementById('sipReturns').textContent = formatINR(returns);
+  document.getElementById('sipGain').textContent = ((returns/invested)*100).toFixed(1) + '%';
+
+  generateSIPTable(monthly, monthlyRate, months);
+  updateSliders();
+}
+
+function generateSIPTable(monthly, monthlyRate, months) {
+  let balance = 0;
+  const yearlyData = [];
+  let monthsInYear = 0;
+  let investedInYear = 0;
+
+  for (let i = 1; i <= months; i++) {
+    balance = balance * (1 + monthlyRate) + monthly;
+    monthsInYear++;
+    investedInYear += monthly;
+
+    if (i % 12 === 0) {
+      yearlyData.push({
+        year: Math.ceil(i / 12),
+        invested: investedInYear,
+        growth: balance - investedInYear,
+        total: balance
+      });
+      investedInYear = 0;
+    }
+  }
+
+  let html = yearlyData.map(d => `
+    <tr>
+      <td>${d.year}</td>
+      <td>${formatINR(d.invested)}</td>
+      <td>${formatINR(d.growth)}</td>
+      <td>${formatINR(d.total)}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('sipYearlyTable').innerHTML = html || '<tr><td colspan="4">No data</td></tr>';
+}
+
+function formatINR(num) {
+  if (num >= 10000000) return '₹' + (num / 10000000).toFixed(2) + ' Cr';
+  if (num >= 100000) return '₹' + (num / 100000).toFixed(2) + ' L';
+  if (num >= 1000) return '₹' + (num / 1000).toFixed(2) + ' K';
+  return '₹' + num.toFixed(2);
+}
+
+function syncInput(id, el) { document.getElementById(id).value = el.value; }
+
+function updateSliders() {
+  document.getElementById('sipAmountSlider').value = document.getElementById('sipAmount').value;
+  document.getElementById('sipRateSlider').value = document.getElementById('sipRate').value;
+  document.getElementById('sipYearsSlider').value = document.getElementById('sipYears').value;
+}
+
+function whatsappShare(t, tx) { window.open(`https://wa.me/?text=${encodeURIComponent(t+': '+tx)}`, '_blank'); }
+function copyText(t) { navigator.clipboard.writeText(t); alert('Copied!'); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  calculateSIP();
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('cn_theme') || 'light');
+});
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('cn_theme', theme);
+}
+
+function toggleMenu() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
