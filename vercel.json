@@ -4,6 +4,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    {"source":"/googlea34ef4d1fd152cf3.html","destination":"/googlea34ef4d1fd152cf3.html"},
     {"source":"/tools/:t","destination":"/tools/:t.html"},
     {"source":"/blog/:p","destination":"/blog/:p.html"},
     {"source":"/hi/:t","destination":"/hi/:t.html"}
