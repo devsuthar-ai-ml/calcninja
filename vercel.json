@@ -1,63 +1,24 @@
 {
-  "buildCommand": "echo 'Static site, no build needed'",
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    {
-      "source": "/tools/:slug",
-      "destination": "/tools/:slug.html"
-    }
+    {"source":"/tools/:t","destination":"/tools/:t.html"},
+    {"source":"/blog/:p","destination":"/blog/:p.html"},
+    {"source":"/hi/:t","destination":"/hi/:t.html"}
   ],
   "redirects": [
-    {
-      "source": "/emi",
-      "destination": "/tools/emi-calculator.html",
-      "permanent": true
-    },
-    {
-      "source": "/sip",
-      "destination": "/tools/sip-calculator.html",
-      "permanent": true
-    },
-    {
-      "source": "/gst",
-      "destination": "/tools/gst-calculator.html",
-      "permanent": true
-    }
+    {"source":"/emi","destination":"/tools/emi-calculator.html","permanent":true},
+    {"source":"/sip","destination":"/tools/sip-calculator.html","permanent":true},
+    {"source":"/gst","destination":"/tools/gst-calculator.html","permanent":true}
   ],
   "headers": [
-    {
-      "source": "/css/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/js/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=3600"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        }
-      ]
-    }
+    {"source":"/css/:path*","headers":[{"key":"Cache-Control","value":"public,max-age=31536000,immutable"}]},
+    {"source":"/js/:path*","headers":[{"key":"Cache-Control","value":"public,max-age=31536000,immutable"}]},
+    {"source":"/:path*","headers":[
+      {"key":"Cache-Control","value":"public,max-age=3600"},
+      {"key":"X-Content-Type-Options","value":"nosniff"},
+      {"key":"X-Frame-Options","value":"DENY"}
+    ]}
   ]
 }
