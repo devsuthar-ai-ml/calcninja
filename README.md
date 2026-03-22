@@ -370,7 +370,7 @@ MIT License - Feel free to use, modify, and redistribute!
 
 ---
 
-## 💬 Built With ❤️ By
+## 💬 Built With ❤️ By Dev Suthar
 
 Made for Indians, by someone who loves financial education and passive income. 
 
